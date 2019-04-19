@@ -12,7 +12,10 @@ from abc import ABCMeta, abstractmethod
 import os
 
 class Detector:
-
+    """
+    A generic class with all the common functionalities.
+    
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self, subjects):
@@ -54,7 +57,9 @@ class Detector:
         return np.mean(eers), np.std(eers)
 
 class ManhattanDetector(Detector):
-
+    """
+    A class for Manhattan detector model.
+    """
     def training(self):
         self.mean_vector = self.train.mean().values
 
@@ -70,7 +75,9 @@ class ManhattanDetector(Detector):
             self.imposter_scores.append(cur_score)
 
 class ManhattanFilteredDetector(Detector):
-
+    """
+    A class for Manhatten Filtered detector model. 
+    """
     def training(self):
         self.mean_vector = self.train.mean().values
         self.std_vector = self.train.std().values
@@ -95,7 +102,9 @@ class ManhattanFilteredDetector(Detector):
             self.imposter_scores.append(cur_score)
 
 class ManhattanScaledDetector(Detector):
-
+    """
+    A class for Manhattan Scaled detector model.
+    """
     def training(self):
         self.mean_vector = self.train.mean().values
         self.mad_vector  = self.train.mad().values
@@ -118,7 +127,9 @@ class ManhattanScaledDetector(Detector):
             self.imposter_scores.append(cur_score)
 
 class SVMDetector(Detector):
-
+    """
+    A class for SVM detector model.
+    """
     def training(self):
         self.clf = OneClassSVM(kernel='rbf',gamma=26)
         self.clf.fit(self.train)
@@ -130,7 +141,9 @@ class SVMDetector(Detector):
         self.imposter_scores = list(self.imposter_scores)
 
 class GMMDetector(Detector):
-
+    """
+    A class for GMM detector model.
+    """
      def training(self):
         self.gmm = GMM(n_components = 2, covariance_type = 'diag',
                         verbose = False )
